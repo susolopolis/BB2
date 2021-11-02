@@ -1,0 +1,212 @@
+
+
+
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<style>
+    @import "compass/css3";
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+        color:white;
+        font-size:12px;
+        background:#333 url(/images/classy_fabric.png);
+    }
+
+    form {
+        background:#111;
+        width:70%;
+        margin:30px auto;
+        border-radius:0.4em;
+        border:1px solid #191919;
+        overflow:hidden;
+        position:relative;
+        box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
+    }
+
+    form:after {
+        content:"";
+        display:block;
+        position:absolute;
+        height:1px;
+        width:100px;
+        left:20%;
+        background:linear-gradient(left, #111, #444, #b6b6b8, #444, #111);
+        top:0;
+    }
+
+    form:before {
+        content:"";
+        display:block;
+        position:absolute;
+        width:8px;
+        height:5px;
+        border-radius:50%;
+        left:34%;
+        top:-7px;
+        box-shadow: 0 0 6px 4px #fff;
+    }
+
+    .inset {
+        padding:20px;
+        border-top:1px solid #19191a;
+    }
+
+    form h1 {
+        font-size:18px;
+        text-shadow:0 1px 0 black;
+        text-align:center;
+        padding:15px 0;
+        border-bottom:1px solid rgba(0,0,0,1);
+        position:relative;
+    }
+
+    form h1:after {
+        content:"";
+        display:block;
+        width:250px;
+        height:100px;
+        position:absolute;
+        top:0;
+        left:50px;
+        pointer-events:none;
+        transform:rotate(70deg);
+        background:linear-gradient(50deg, rgba(255,255,255,0.15), rgba(0,0,0,0));
+
+    }
+
+    label {
+        color:#666;
+        display:block;
+        padding-bottom:9px;
+    }
+
+    input[type=text],
+    input[type=password] {
+        width:100%;
+        padding:8px 5px;
+        background:white;
+        border:1px solid #222;
+        box-shadow:
+                0 1px 0 rgba(255,255,255,0.1);
+        border-radius:0.3em;
+        margin-bottom:20px;
+    }
+
+    label[for=remember]{
+        color:white;
+        display:inline-block;
+        padding-bottom:0;
+        padding-top:5px;
+    }
+
+    input[type=checkbox] {
+        display:inline-block;
+        vertical-align:top;
+    }
+
+    .p-container {
+        padding:0 20px 20px 20px;
+        text-align: center;
+    }
+
+    .p-container:after {
+        clear:both;
+        display:table;
+        content:"";
+    }
+
+    .p-container span {
+        display:block;
+        float:left;
+        color:#0d93ff;
+        padding-top:8px;
+    }
+
+    input[type=submit] {
+        padding:5px 20px;
+        border:1px solid rgba(0,0,0,0.4);
+        text-shadow:0 -1px 0 rgba(0,0,0,0.4);
+        box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.3),
+                inset 0 10px 10px rgba(255,255,255,0.1);
+        border-radius:0.3em;
+        background:#0184ff;
+        color:white;
+        float:right;
+        font-weight:bold;
+        cursor:pointer;
+        font-size:13px;
+    }
+
+    input[type=submit]:hover {
+        box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.3),
+                inset 0 -10px 10px rgba(255,255,255,0.1);
+    }
+
+    .lc-btn {
+        background-color: #199319;
+        color: white;
+        padding: 15px 25px;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .lc-btn:hover {
+        background-color: #223094;
+    }
+
+</style>
+
+        <h1 th:text="'Product ' + ${item.itemCode}"></h1>
+                <form method="get" action="/api/item/saveChanges">
+                    <div class="caja">
+                    <p>
+                        <label for="itemCode">Item Code</label>
+                         <input th:value="${item.itemCode}" name="itemCode" id="itemCode"></input>
+                    </p>
+                    <p>
+                        <label for="Description">Item Description</label>
+                        <input th:value="${item.Description}" name="Description" id="Description"></input>
+                    </p>
+                    <p>
+                        <label for="price">Item Price</label>
+                        <input th:value="${item.Price}" name="price" id="price"></input>
+                    </p>
+                    <p>
+                        <label for="date">Item Creation Date</label>
+                        <input th:value="${item.creationDate}" name="date" id="date"></input>
+                    </p>
+                    <p>
+                        <label for="creator">Item Creator</label>
+                        <input th:value="${item.creatorUser}" name="creator" id="creator"></input>
+                    </p>
+                    <p>
+                        <label for="state">Item State</label>
+                        <input th:value="${item.itemEnum.getEstado()}" name="state" id="state"></input>
+                    </p>
+                <p >
+                    <label th:if="${item.getSuppliers().size  != 0}">Item Suppliers</label>
+                     <p th:if="${item.getSuppliers().size  != 0}" th:each="i : ${#numbers.sequence(0,item.getSuppliers().size() - 1)}" th:utext="${item.getSuppliers().get(__${i}__).getName()}"></p>
+                </p>
+                <p>
+                    <label th:if="${item.getPriceReduction().size  != 0}">Item Price Reductions</label>
+                    <p th:if="${item.getPriceReduction().size  != 0}" th:each="j : ${#numbers.sequence(0,item.getPriceReduction().size() - 1)}" th:utext="${item.getPriceReduction().get(__${j}__).getReducedPrice()}"></p>
+                </p>
+            </div>
+                    <p class="p-container">
+                        <input name="submit" type="submit" value="Save" />
+                    </p>
+            </form>
+<p th:if="${item.itemEnum.getEstado() == 'Active'}">
+    <a th:href="@{/api/item/changeInactive/{itemCode}(itemCode = ${item.itemCode})}"> <input name="submit" type="submit" value="Deactivate" width="100%"/></a>
+</p>
+<p th:if="${item.itemEnum.getEstado() == 'No Active'}">
+    <a th:href="@{/api/item/changeActive/{itemCode}(itemCode = ${item.itemCode})}"> <input name="submit" type="submit" value="Activate" width="100%" /></a>
+</p>
+</html>
