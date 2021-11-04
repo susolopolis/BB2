@@ -190,6 +190,11 @@
       <input type="text" name="end" id="end">
     </p>
 
+    <p th:if="${itemCode != null}">
+      <label for="itemCode">Item Associated</label>
+      <input th:value="${itemCode}" name="itemCode" id="itemCode" readonly>
+    </p>
+
   </div>
   <p class="p-container">
     <input name="submit" type="submit" value="Create Price Reduction" />

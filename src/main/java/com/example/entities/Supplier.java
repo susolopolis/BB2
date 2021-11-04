@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Supplier {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)   //Agregar one to may para item
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long idsupplier;
     private String name;
     private String country;

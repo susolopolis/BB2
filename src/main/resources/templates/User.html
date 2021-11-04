@@ -165,9 +165,69 @@
         justify-content: center;
     }
 
+
+
+
+    h2{
+        text-align:center;
+        color: green;
+    }
+
+    .fl-table {
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: normal;
+        border: none;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
+        white-space: nowrap;
+        background-color: white;
+    }
+
+    .fl-table td, .fl-table th {
+        text-align: center;
+        padding: 8px;
+    }
+
+    .fl-table td {
+        border-right: 1px solid #f8f8f8;
+        font-size: 12px;
+    }
+
+    .fl-table thead th {
+        color: #ffffff;
+        background: #4FC3A1;
+    }
+
+
+    .fl-table thead th:nth-child(odd) {
+        color: #ffffff;
+        background: #324960;
+    }
+
+    .fl-table tr:nth-child(even) {
+        background: #F8F8F8;
+    }
+
+    .table-wrapper{
+        margin: 10px 70px 70px;
+        box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+    }
+
+    .button-bar{
+        padding: 5%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .button-bar a{
+        top: 70%;
+        left: 50%;
+    }
+
 </style>
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>User Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -176,21 +236,22 @@
 
     <h1 th:text="'Welcome, ' + ${userName}"></h1>
     <h2 th:if="${message != null}" th:text="${message}"></h2>
-        <a th:href="@{/api/item/getItemsUser/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Get Items" /></a>
-        <a th:href="@{/api/item/getCreateView/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Create Item" /></a>
-        <a th:href="@{/api/supplier/getSupplierView/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Create Supplier" /></a>
-        <a th:href="@{/api/price/getPriceView/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Create Price Reduction" /></a>
-
-    <div class="contenedor">
-            <table border="2" title="List of Items" width="80%" th:if="${list != null}">
+    <div class="button-bar">
+            <a th:href="@{/api/item/getItemsUser/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Get Items" /></a>
+            <a th:href="@{/api/item/getCreateView/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Create Item" /></a>
+            <a th:href="@{/api/supplier/getSupplierView/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Create Supplier" /></a>
+            <a th:href="@{/api/price/getPriceView/{username}(username = ${userName})}"> <input name="submit" type="submit" value="Create Price Reduction" /></a>
+    </div>
+    <div class="table-wrapper">
+            <table class="fl-table" border="2" title="List of Items" width="80%" th:if="${list != null}">
             <tr>
-                <td bgcolor="#8a2be2">Info</td>
-                <td bgcolor="#8a2be2">Item Code</td>
-                <td bgcolor="#006400">Description</td>
-                <td bgcolor="#dc143c">Price</td>
-                <td bgcolor="#ffa07a">Creation Date</td>
-                <td bgcolor="blue">Creator</td>
-                <td bgcolor="#8b4513">State</td>
+                <td bgcolor="#00bfff">Info</td>
+                <td bgcolor="#00bfff">Item Code</td>
+                <td bgcolor="#00bfff">Description</td>
+                <td bgcolor="#00bfff">Price</td>
+                <td bgcolor="#00bfff">Creation Date</td>
+                <td bgcolor="#00bfff">Creator</td>
+                <td bgcolor="#00bfff">State</td>
             </tr>
             <tr th:each="tmpItem : ${list}">
                 <td bgcolor="white"><a th:href="@{/api/item/getInfo/{item}(item = ${tmpItem.itemCode})}">Info</a></td>

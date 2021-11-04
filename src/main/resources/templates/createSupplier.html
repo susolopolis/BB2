@@ -1,6 +1,7 @@
 
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <style>
     @import "compass/css3";
@@ -184,6 +185,11 @@
         <p>
             <label for="country">Country</label>
             <input type="text" name="country" id="country">
+        </p>
+
+        <p th:if="${itemCode != null}">
+            <label for="itemCode">Item Associated</label>
+            <input th:value="${itemCode}" name="itemCode" id="itemCode" readonly>
         </p>
 
     </div>

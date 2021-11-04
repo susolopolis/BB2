@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
 @Controller
 public class ItemController {
 
+    private String Username;
+
     @Autowired
     itemRepository itemRepository;
     @Autowired
@@ -27,11 +30,19 @@ public class ItemController {
     PriceReductionRepository reductionRepository;
 
 
-    @GetMapping("/getItemsUser/{username:.+}")
-    public String getItemsUser(@PathVariable("username") String username, ModelMap model){
+
+    @PostMapping("/setUser")
+    public String setUser( @RequestParam("username") String Username, ModelMap model){
+        this.Username = Username;
+        return "User";
+    }
+
+    @GetMapping("/getItemsUser")
+    public String getItemsUser(ModelMap model, @RequestParam("username") String Username){
         List<Item> itemList = itemRepository.findAll();
+        this.Username = Username;
         model.addAttribute("list", itemList);
-        model.addAttribute("userName",username);
+        model.addAttribute("userName",this.Username);
         return "User";
 
     }
@@ -71,7 +82,8 @@ public class ItemController {
 
     @GetMapping("/getCreateView/{username:.+}")
     public String getCreateView( @PathVariable("username") String username, ModelMap model){
-        model.addAttribute(username);
+        this.Username = username;
+        model.addAttribute(this.Username);
         return "createItem";
     }
 
@@ -99,9 +111,9 @@ public class ItemController {
         newItem.setCreationDate();
         int PriceInt = Integer.parseInt(Price);
         newItem.setPrice(PriceInt);
-        newItem.setCreatorUser(creator);
+        newItem.setCreatorUser(this.Username);
         itemRepository.save(newItem);
-        model.addAttribute("userName", creator);
+        model.addAttribute("userName", this.Username);
         model.addAttribute("message","The product has been created!");
         return "User";
     }
@@ -109,6 +121,7 @@ public class ItemController {
     @GetMapping("/getInfo/{item:.+}")
     public String getItemInfo(@PathVariable("item") String itemCode, ModelMap model){
         Item item = itemRepository.findByItemCode(itemCode);
+        model.addAttribute("userName", this.Username);
         model.addAttribute("item",item);
         return "itemInfo";
     }
@@ -149,7 +162,7 @@ public class ItemController {
         Timestamp newDate = Timestamp.valueOf(date);
         item.setCreationDate(newDate);
         model.addAttribute("message","Item " + itemCode + " correctly edited");
-        model.addAttribute("userName", creator);
+        model.addAttribute("userName", this.Username);
         itemRepository.save(item);
         return "User";
     }

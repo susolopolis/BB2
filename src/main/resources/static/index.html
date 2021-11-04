@@ -179,12 +179,27 @@ input[type=submit]:hover {
     margin: auto;
 }
 
+h1{
+    border: 1px solid red;
+}
+
+div{
+    border: 1px solid red;
+}
+
+a{
+    display: block;
+    text-alignt: center;
+}
 
 </style>
     <h1>Welcome to the App!</h1>
 
     <div class="button-box">
-        <a href="/templates/login"><input name="submit" type="submit" value="Login" /></a>
+        <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/User_icon_2.svg"/>
+            <a href="/templates/login"><input name="submit" type="submit" value="Login" /></a>
+        </div>
 
         <a href="/templates/signup"> <input name="submit" type="submit" value="Sign Up" /></a>
 

@@ -141,6 +141,11 @@ input[type=submit] {
   font-size:13px;
 }
 
+h2{
+    text-align:center;
+    color: red;
+}
+
 input[type=submit]:hover {
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.3),
@@ -160,8 +165,9 @@ input[type=submit]:hover {
 }
 
 </style>
-<form method="get" action="/api/user/login">
+<form method="post" action="/api/user/login">
     <h1>Welcome Back!</h1>
+    <h2 th:if="${message != null}" th:text="${message}"></h2>
     <div class="inset">
         <p>
             <label for="username">Username or Email</label>

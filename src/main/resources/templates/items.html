@@ -171,6 +171,48 @@ h2{
     display: flex;
     justify-content: center;
 }
+
+.table-wrapper{
+    margin: 10px 70px 70px;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+.fl-table {
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.fl-table td, .fl-table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.fl-table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 12px;
+}
+
+.fl-table thead th {
+    color: #ffffff;
+    background: #4FC3A1;
+}
+
+
+.fl-table thead th:nth-child(odd) {
+    color: #ffffff;
+    background: #324960;
+}
+
+.fl-table tr:nth-child(even) {
+    background: #F8F8F8;
+}
+
 </style>
 
 <!DOCTYPE html>
@@ -209,20 +251,20 @@ h2{
     </p>
 
 </form>
-<div class="contenedor">
-        <table border="2" title="List of Items" width="80%" th:if="${list != null}">
+<div class="table-wrapper">
+        <table class="fl-table" border="2" title="List of Items" width="80%" th:if="${list != null}">
             <tr>
-                <td bgcolor="#8a2be2">Info</td>
-                <td bgcolor="#8a2be2">Item Code</td>
-                <td bgcolor="#006400">Description</td>
-                <td bgcolor="#dc143c">Price</td>
-                <td bgcolor="#ffa07a">Creation Date</td>
-                <td bgcolor="blue">Creator</td>
-                <td bgcolor="#8b4513">State</td>
+                <td th:if="${userName !=null}" bgcolor="#00bfff">Info</td>
+                <td bgcolor="#00bfff">Item Code</td>
+                <td bgcolor="#00bfff">Description</td>
+                <td bgcolor="#00bfff">Price</td>
+                <td bgcolor="#00bfff">Creation Date</td>
+                <td bgcolor="#00bfff">Creator</td>
+                <td bgcolor="#00bfff">State</td>
             </tr>
             <tr th:each="tmpItem : ${list}">
 
-                <td bgcolor="white"><a href="/api/item/getInfo">Info</a></td>
+                <td th:if="${userName !=null}" bgcolor="white"><a href="/api/item/getInfo">Info</a></td>
                 <td style="color:black" bgcolor="white" th:text = "${tmpItem.itemCode}"></td>
                 <td style="color:black" bgcolor="white" th:text = "${tmpItem.Description}"></td>
                 <td style="color:black" bgcolor="white" th:text = "${tmpItem.Price}"></td>

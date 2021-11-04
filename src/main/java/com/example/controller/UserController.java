@@ -5,16 +5,15 @@ import com.example.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/user")
 
 @Controller
 public class UserController {
+
 
     @Autowired
     UserRepository usuarioRepository;
@@ -31,7 +30,6 @@ public class UserController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         user.setPassword(encoder.encode(password));
-        user.setPassword(password);
         user.setEmail(Email);
         user.setCreationDate();
         user.setRegularUser();
@@ -39,28 +37,31 @@ public class UserController {
 
         usuarioRepository.save(user);
         model.addAttribute("userName",user.getUsername());
+        model.addAttribute("message","User created!");
         return "User";
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(@RequestParam("username") String Username, @RequestParam("password") String Password, ModelMap model) {
-        String User = Username;
-        String password = Password;
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        User user = usuarioRepository.findByUsername(User);
+        User user = usuarioRepository.findByUsername(Username);
         if (user == null) {
-            user = usuarioRepository.findByEmail(User);
+            user = usuarioRepository.findByEmail(Username);
         }
         if (user != null) {
-            if (password.equals(user.getPassword())) {
-                model.addAttribute("user", user);
-                model.addAttribute("userName",User);
+            if (Password.equals(user.getPassword())) {
+                model.addAttribute("userName",Username);
             }
             else{
-                showMessageDialog(null, "Incorrect Password");
+                model.addAttribute("message","Incorrect Password!");
+                return "login";
             }
+        }
+        else{
+            model.addAttribute("message","Username or Email don´t found!");
+            return "login";
         }
         return "User";
     }

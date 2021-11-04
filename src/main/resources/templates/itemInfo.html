@@ -168,7 +168,7 @@
                     <div class="caja">
                     <p>
                         <label for="itemCode">Item Code</label>
-                         <input th:value="${item.itemCode}" name="itemCode" id="itemCode"></input>
+                         <input th:value="${item.itemCode}" name="itemCode" id="itemCode" readonly></input>
                     </p>
                     <p>
                         <label for="Description">Item Description</label>
@@ -188,7 +188,7 @@
                     </p>
                     <p>
                         <label for="state">Item State</label>
-                        <input th:value="${item.itemEnum.getEstado()}" name="state" id="state"></input>
+                        <input th:value="${item.itemEnum.getEstado()}" name="state" id="state" readonly></input>
                     </p>
                 <p >
                     <label th:if="${item.getSuppliers().size  != 0}">Item Suppliers</label>
@@ -208,5 +208,13 @@
 </p>
 <p th:if="${item.itemEnum.getEstado() == 'No Active'}">
     <a th:href="@{/api/item/changeActive/{itemCode}(itemCode = ${item.itemCode})}"> <input name="submit" type="submit" value="Activate" width="100%" /></a>
+</p>
+
+<p class="p-container">
+    <a th:href="@{/api/supplier/getSupplierViewItem/{username}/{itemCode}(username=${userName},itemCode=${item.itemCode})}"><input name="submit" type="submit" value="Add Supplier" /></a>
+</p>
+
+<p class="p-container">
+    <a th:href="@{/api/price/getPriceViewItem/{username}/{itemCode}(username=${userName},itemCode=${item.itemCode})}"><input name="submit" type="submit" value="Add Price Reduction" /></a>
 </p>
 </html>
